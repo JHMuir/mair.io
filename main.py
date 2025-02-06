@@ -13,3 +13,4 @@ if __name__ == "__main__":
             query="Explain to me who Mario is in a few short sentences"
         )
     )
+    print(client.create_response_with_audio(query="Describe this audio clip"))
