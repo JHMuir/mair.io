@@ -1,6 +1,7 @@
 import os
 from os.path import isfile, join
 from tqdm import tqdm
+from playsound3 import playsound
 from google import genai
 from google.genai import types
 
@@ -12,7 +13,7 @@ class GoogleClient:
         self.logger = create_logger()
         self.client = genai.Client(api_key=api_key)
         self.model = model
-        self.music_files = self.parse_music_data()
+        self.music_files, self.music_dict = self.parse_music_data()
         self.system_instruction = """
             You are an AI Super Mario Bros soundtrack retrieval bot.
             You are loaded with each Super Mario Bros soundtrack file.
@@ -32,7 +33,12 @@ class GoogleClient:
             self.logger.info("File upload found, connecting cached files.")
             music_files = self.client.files.list()
             self.logger.info("Cached files connected.")
-        return music_files
+        music_dict = {
+            name.name: file
+            for name, file in zip(music_files, os.listdir(r"data\music"))
+        }
+        # print(music_dict)
+        return music_files, music_dict
 
     def create_response(self, query: str) -> str:
         response = self.client.models.generate_content(
@@ -53,9 +59,16 @@ class GoogleClient:
             ),
             contents=[f"{query}", self.music_files[0]],
         )
-        myfile = self.music_files[0]
-        file_name = myfile.name
-        myfile = self.client.files.get(name=file_name)
-        print(myfile)
+        # myfile = self.music_files[0]
+        # file_name = myfile.name
+        # myfile = self.client.files.get(name=file_name)
+        # print(myfile)
         self.logger.info("Completed standard response with audio content.")
         return response.text
+
+    def return_song(self):
+        self.logger.info("Playing music.")
+        playsound(sound=rf"data\music\{self.music_dict[self.music_files[0].name]}")
+        self.logger.info("Music stopped.")
+        return None
+        # return self.music_files[0]

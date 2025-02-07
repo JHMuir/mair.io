@@ -16,3 +16,4 @@ if __name__ == "__main__":
     print(
         client.create_response_with_audio(query="Is this audio clip from Super Mario?")
     )
+    print(client.return_song())
