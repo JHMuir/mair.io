@@ -6,6 +6,7 @@ load_dotenv()
 
 api_key = os.environ["GOOGLE_API_KEY"]
 
+# testing the client
 if __name__ == "__main__":
     client = GoogleClient(api_key=api_key)
     print(
