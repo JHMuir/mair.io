@@ -1,13 +1,14 @@
 import librosa
-from pathlib import Path
+from .utils import Utilities
 
 
 class MusicProcessor:
     def __init__(self):
-        self.file = librosa.load(path=Path(r"data\music\1.Ground_Theme.mp3"))
+        self.logger = Utilities.create_logger()
+        self.logger.info("Loading audio file.")
 
     def process(self):
-        waveform, sampling_rate = librosa.load(self.file)
+        waveform, sampling_rate = librosa.load(path=r"data\music\1.Ground_Theme.mp3")
 
         tempo, beat_frames = librosa.beat.beat_track(y=waveform, sr=sampling_rate)
 

@@ -5,12 +5,12 @@ from playsound3 import playsound
 from google import genai
 from google.genai import types
 
-from .utils import create_logger
+from .utils import Utilities
 
 
 class GoogleClient:
     def __init__(self, api_key: str, model="gemini-2.0-flash"):
-        self.logger = create_logger()
+        self.logger = Utilities.create_logger()
         self.client = genai.Client(api_key=api_key)
         self.model = model
         self.music_files, self.music_dict = self.parse_music_data()
