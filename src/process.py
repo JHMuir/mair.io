@@ -1,19 +1,29 @@
+import os
+from os.path import join
 import librosa
+from tqdm import tqdm
+
 from .utils import Utilities
 
 
 class MusicProcessor:
     def __init__(self):
         self.logger = Utilities.create_logger()
-        self.logger.info("Loading audio file.")
+        self.files = [file for file in os.listdir(r"data\music")]
 
     def process(self):
-        waveform, sampling_rate = librosa.load(path=r"data\music\1.Ground_Theme.mp3")
+        music_metadata = {}
+        for file in tqdm(self.files):
+            self.logger.info(f"Processing audio file {file}.")
 
-        tempo, beat_frames = librosa.beat.beat_track(y=waveform, sr=sampling_rate)
+            waveform, sampling_rate = librosa.load(path=join(r"data\music", file))
+            # isfile(join(r"data\music", file))
+            tempo, beat_frames = librosa.beat.beat_track(y=waveform, sr=sampling_rate)
 
-        print(f"Estimated tempo: {tempo} beats per minute")
+            music_metadata[file] = (waveform, sampling_rate, tempo, beat_frames)
 
-        beat_times = librosa.frames_to_time(frames=beat_frames, sr=sampling_rate)
+            print(f"Estimated tempo: {tempo} beats per minute")
 
-        print(beat_times)
+            # beat_times = librosa.frames_to_time(frames=beat_frames, sr=sampling_rate)
+
+        print(music_metadata)
