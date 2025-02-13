@@ -30,6 +30,25 @@ class AudioProcessor:
             energy = librosa.feature.rms(y=waveform)[0]
             zero_crossing_rate = librosa.feature.zero_crossing_rate(y=waveform)[0]
 
+            # Detecting the key of the audio file using extracted features
+            chroma_to_key = [
+                "C",
+                "C#",
+                "D",
+                "D#",
+                "E",
+                "F",
+                "F#",
+                "G",
+                "G#",
+                "A",
+                "A#",
+                "B",
+            ]
+            chroma_mean = np.mean(chromagram, axis=1).tolist()
+            estimated_key_index = np.argmax(chroma_mean)
+            estimated_key = chroma_to_key[estimated_key_index]
+
             # Adding features to a dictionary with the file name as key
             audio_metadata[file] = {
                 "waveform": waveform,
@@ -37,10 +56,11 @@ class AudioProcessor:
                 "tempo": float(tempo),
                 "beat_times": beat_times,
                 "spectral_centroid_mean": float(np.mean(spectral_centroids)),
-                "chroma_mean": np.mean(chromagram, axis=1).tolist(),
+                "chroma_mean": chroma_mean,
                 "energy_mean": float(np.mean(energy)),
                 "energy_std": float(np.std(energy)),
                 "zero_crossing_rate_mean": float(np.mean(zero_crossing_rate)),
+                "key": estimated_key,
             }
         self.logger.info("Audio feature extraction complete.")
         return audio_metadata
