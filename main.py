@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from src.client import GoogleClient
-from src.process import MusicProcessor
+from src.process import AudioProcessor
 
 load_dotenv()
 
@@ -22,8 +22,8 @@ def test_client():
 
 
 def test_processor():
-    processor = MusicProcessor()
-    processor.process()
+    processor = AudioProcessor()
+    processor.print_features()
 
 
 # testing the client
