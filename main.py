@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from src.client import GoogleClient
 from src.process import AudioProcessor
+from src.classify import AudioClassifier
 
 load_dotenv()
 
@@ -23,6 +24,8 @@ def test_client():
 
 def test_processor():
     processor = AudioProcessor()
+    classifier = AudioClassifier(audio_metadata=processor.audio_metadata)
+    classifier.do_a_thing()
     processor.print_features()
 
 
