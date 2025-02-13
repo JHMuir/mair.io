@@ -65,24 +65,8 @@ class AudioProcessor:
 
             # Chromagram (Harmony and Key)
             chromagram = librosa.feature.chroma_stft(y=waveform, sr=sampling_rate)
-            # Detecting the key of the audio file using extracted features
-            chroma_to_key = [
-                "C",
-                "C#",
-                "D",
-                "D#",
-                "E",
-                "F",
-                "F#",
-                "G",
-                "G#",
-                "A",
-                "A#",
-                "B",
-            ]
             chroma_mean = np.mean(chromagram, axis=1).tolist()
-            estimated_key_index = np.argmax(chroma_mean)
-            estimated_key = chroma_to_key[estimated_key_index]
+            estimated_key = self.find_key(chroma_mean=chroma_mean)
 
             complexity_score = float(np.mean(spectral_contrast_mean))
             tonal_stability = float(np.std(tonnetz_mean))
@@ -108,6 +92,26 @@ class AudioProcessor:
             }
         self.logger.info("Audio feature extraction complete.")
         return audio_metadata
+
+    def find_key(self, chroma_mean):
+        # Detecting the key of the audio file using extracted features
+        chroma_to_key = [
+            "C",
+            "C#",
+            "D",
+            "D#",
+            "E",
+            "F",
+            "F#",
+            "G",
+            "G#",
+            "A",
+            "A#",
+            "B",
+        ]
+        estimated_key_index = np.argmax(chroma_mean)
+        estimated_key = chroma_to_key[estimated_key_index]
+        return estimated_key
 
     def print_features(self):
         for file in self.files:
