@@ -3,33 +3,30 @@ from dotenv import load_dotenv
 from src.client import GoogleClient
 from src.process import AudioProcessor
 from src.classify import AudioClassifier
+from src.utils import Utilities
 
 load_dotenv()
 
 api_key = os.environ["GOOGLE_API_KEY"]
 
 
-def test_client():
-    client = GoogleClient(api_key=api_key)
+def test():
+    logger = Utilities.create_logger()
+    audio_files = [audio_file for audio_file in os.listdir(r"data\music")]
+    processor = AudioProcessor(audio_files=audio_files, logger=logger)
+    classifier = AudioClassifier(
+        audio_metadata=processor.get_audio_metadata(), logger=logger
+    )
+    client = GoogleClient(api_key=api_key, audio_files=audio_files, logger=logger)
+
+    processor.print_metadata()
+    classifier.classify_mood()
     print(
         client.create_response(
             query="Explain to me who Mario is in a few short sentences"
         )
     )
-    print(
-        client.create_response_with_audio(query="Is this audio clip from Super Mario?")
-    )
-    print(client.return_song())
 
 
-def test_processor():
-    processor = AudioProcessor()
-    classifier = AudioClassifier(audio_metadata=processor.audio_metadata)
-    classifier.do_a_thing()
-    processor.print_features()
-
-
-# testing the client
 if __name__ == "__main__":
-    # test_client()
-    test_processor()
+    test()

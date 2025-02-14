@@ -1,22 +1,33 @@
-import os
 from os.path import join
 import numpy as np
 import librosa
 from tqdm import tqdm
 
-from .utils import Utilities
-
 
 class AudioProcessor:
-    def __init__(self):
-        self.logger = Utilities.create_logger()
-        self.files = [file for file in os.listdir(r"data\music")]
-        self.audio_metadata = self.create_metadata()
+    def __init__(self, audio_files: list[str], logger):
+        self._logger = logger
+        self._audio_files = audio_files
+        self._audio_metadata = self._create_metadata()
 
-    def create_metadata(self) -> dict:  # isfile(join(r"data\music", file))
+    def print_metadata(self) -> None:
+        for file in self._audio_files:
+            self._logger.info(f"Printing features for {file}")
+            for feature_name, value in self._audio_metadata[file].items():
+                if isinstance(value, list):
+                    print(f"{feature_name}: {len(value)} values")
+                    if len(value) < 5:
+                        print(f"Values: {value}")
+                else:
+                    print(f"{feature_name}: {value}")
+
+    def get_audio_metadata(self) -> dict:
+        return self._audio_metadata
+
+    def _create_metadata(self) -> dict:  # isfile(join(r"data\music", file))
         audio_metadata = {}
-        self.logger.info("Processing audio tracks and extracting features.")
-        for file in tqdm(self.files):
+        self._logger.info("Processing audio tracks and extracting features.")
+        for file in tqdm(self._audio_files):
             # Extracting features from audio file
             waveform, sampling_rate = librosa.load(path=join(r"data\music", file))
 
@@ -66,7 +77,23 @@ class AudioProcessor:
             # Chromagram (Harmony and Key)
             chromagram = librosa.feature.chroma_stft(y=waveform, sr=sampling_rate)
             chroma_mean = np.mean(chromagram, axis=1).tolist()
-            estimated_key = self.find_key(chroma_mean=chroma_mean)
+            # Detecting the key of the audio file using chromagram
+            chroma_to_key = [
+                "C",
+                "C#",
+                "D",
+                "D#",
+                "E",
+                "F",
+                "F#",
+                "G",
+                "G#",
+                "A",
+                "A#",
+                "B",
+            ]
+            estimated_key_index = np.argmax(chroma_mean)
+            estimated_key = chroma_to_key[estimated_key_index]
 
             complexity_score = float(np.mean(spectral_contrast_mean))
             tonal_stability = float(np.std(tonnetz_mean))
@@ -90,36 +117,5 @@ class AudioProcessor:
                 "complexity_score": complexity_score,
                 "tonal_stability": tonal_stability,
             }
-        self.logger.info("Audio feature extraction complete.")
+        self._logger.info("Audio feature extraction complete.")
         return audio_metadata
-
-    def find_key(self, chroma_mean):
-        # Detecting the key of the audio file using extracted features
-        chroma_to_key = [
-            "C",
-            "C#",
-            "D",
-            "D#",
-            "E",
-            "F",
-            "F#",
-            "G",
-            "G#",
-            "A",
-            "A#",
-            "B",
-        ]
-        estimated_key_index = np.argmax(chroma_mean)
-        estimated_key = chroma_to_key[estimated_key_index]
-        return estimated_key
-
-    def print_features(self):
-        for file in self.files:
-            self.logger.info(f"Printing features for {file}")
-            for feature_name, value in self.audio_metadata[file].items():
-                if isinstance(value, list):
-                    print(f"{feature_name}: {len(value)} values")
-                    if len(value) < 5:  # Only print if the list is short
-                        print(f"Values: {value}")
-                else:
-                    print(f"{feature_name}: {value}")
