@@ -75,25 +75,11 @@ class AudioProcessor:
             tonnetz_mean = np.mean(tonnetz, axis=1).tolist()
 
             # Chromagram (Harmony and Key)
-            chromagram = librosa.feature.chroma_stft(y=waveform, sr=sampling_rate)
+            chromagram = librosa.feature.chroma_cqt(
+                y=waveform, sr=sampling_rate, bins_per_octave=24
+            )
             chroma_mean = np.mean(chromagram, axis=1).tolist()
-            # Detecting the key of the audio file using chromagram
-            chroma_to_key = [
-                "C",
-                "C#",
-                "D",
-                "D#",
-                "E",
-                "F",
-                "F#",
-                "G",
-                "G#",
-                "A",
-                "A#",
-                "B",
-            ]
-            estimated_key_index = np.argmax(chroma_mean)
-            estimated_key = chroma_to_key[estimated_key_index]
+            key = self._detect_key(chromagram=chromagram)
 
             complexity_score = float(np.mean(spectral_contrast_mean))
             tonal_stability = float(np.std(tonnetz_mean))
@@ -113,9 +99,67 @@ class AudioProcessor:
                 "zero_crossing_rate_mean": zero_crossing_rate_mean,
                 "mfcc_profile": mfcc_means,
                 "tonal_features": tonnetz_mean,
-                "key": estimated_key,
+                "key": key,
                 "complexity_score": complexity_score,
                 "tonal_stability": tonal_stability,
             }
         self._logger.info("Audio feature extraction complete.")
         return audio_metadata
+
+    def _detect_key(self, chromagram):
+        chroma_vals = [np.sum(chromagram[i]) for i in range(12)]
+        pitches = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+        key_freq = {pitches[i]: chroma_vals[i] for i in range(12)}
+        keys = [pitches[i] + " Major" for i in range(12)] + [
+            pitches[i] + " Minor" for i in range(12)
+        ]
+
+        # Krumhansl-Schmuckler key profiles
+        major_profile = [
+            6.35,
+            2.23,
+            3.48,
+            2.33,
+            4.38,
+            4.09,
+            2.52,
+            5.19,
+            2.39,
+            3.66,
+            2.29,
+            2.88,
+        ]
+        minor_profile = [
+            6.33,
+            2.68,
+            3.52,
+            5.38,
+            2.60,
+            3.53,
+            2.54,
+            4.75,
+            3.98,
+            2.69,
+            3.34,
+            3.17,
+        ]
+
+        correlations_maj = []
+        correlations_min = []
+
+        for i in range(12):
+            estimated_key = [key_freq.get(pitches[(i + m) % 12]) for m in range(12)]
+            correlations_maj.append(
+                round(np.corrcoef(major_profile, estimated_key)[1, 0], 3)
+            )
+            correlations_min.append(
+                round(np.corrcoef(minor_profile, estimated_key)[1, 0], 3)
+            )
+
+        key_dict = {
+            **{keys[i]: correlations_maj[i] for i in range(12)},
+            **{keys[i + 12]: correlations_min[i] for i in range(12)},
+        }
+
+        key = max(key_dict, key=key_dict.get)
+        return key
