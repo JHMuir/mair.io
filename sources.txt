@@ -1,0 +1,2 @@
+Librosa: https://github.com/librosa/librosa
+Key Detection Algo: https://github.com/jackmcarthur/musical-key-finder
