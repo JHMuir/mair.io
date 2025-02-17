@@ -88,7 +88,7 @@ class AudioProcessor:
             audio_metadata[file] = {
                 "waveform": waveform,
                 "sampling_rate": sampling_rate,
-                "tempo": float(tempo),
+                "tempo": int(tempo),
                 "beat_times": beat_times,
                 "tempo_scores": tempo_scores,
                 "tempo_structure": tempo_structure,
