@@ -1,12 +1,12 @@
+import logging
 from google import genai
 from google.genai import types
 
+logger = logging.getLogger(__name__)
+
 
 class GoogleClient:
-    def __init__(
-        self, api_key: str, audio_files: list[str], logger, model="gemini-2.0-flash"
-    ):
-        self._logger = logger
+    def __init__(self, api_key: str, audio_files: list[str], model="gemini-2.0-flash"):
         self._client = genai.Client(api_key=api_key)
         self.model = model
         self.audio_files = audio_files
@@ -44,7 +44,7 @@ class GoogleClient:
             ),
             contents=[f"{query}"],
         )
-        self._logger.info("Completed standard text response.")
+        logger.info("Completed standard text response.")
         return response.text
 
     def create_response_with_audio(self, query: str) -> str:
@@ -59,7 +59,7 @@ class GoogleClient:
         # file_name = myfile.name
         # myfile = self.client.files.get(name=file_name)
         # print(myfile)
-        self._logger.info("Completed standard response with audio content.")
+        logger.info("Completed standard response with audio content.")
         return response.text
 
     # def return_song(self):

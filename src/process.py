@@ -1,18 +1,20 @@
 from os.path import join
+import logging
 import numpy as np
 import librosa
 from tqdm import tqdm
 
+logger = logging.getLogger(__name__)
+
 
 class AudioProcessor:
-    def __init__(self, audio_files: list[str], logger):
-        self._logger = logger
+    def __init__(self, audio_files: list[str]):
         self._audio_files = audio_files
         self._audio_metadata = self._create_metadata()
 
     def print_metadata(self) -> None:
         for file in self._audio_files:
-            self._logger.info(f"Printing features for {file}")
+            logger.info(f"Printing features for {file}")
             for feature_name, value in self._audio_metadata[file].items():
                 if isinstance(value, list):
                     print(f"{feature_name}: {len(value)} values")
@@ -26,7 +28,7 @@ class AudioProcessor:
 
     def _create_metadata(self) -> dict:  # isfile(join(r"data\music", file))
         audio_metadata = {}
-        self._logger.info("Processing audio tracks and extracting features.")
+        logger.info("Processing audio tracks and extracting features.")
         for file in tqdm(self._audio_files):
             # Extracting features from audio file
             waveform, sampling_rate = librosa.load(path=join(r"data\music", file))
@@ -103,7 +105,7 @@ class AudioProcessor:
                 "complexity_score": complexity_score,
                 "tonal_stability": tonal_stability,
             }
-        self._logger.info("Audio feature extraction complete.")
+        logger.info("Audio feature extraction complete.")
         return audio_metadata
 
     def _detect_key(self, chromagram):
