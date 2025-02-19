@@ -38,7 +38,7 @@ class AudioClassifier:
 
         X = self.scaler.fit_transform(feature_vectors)
 
-        kmeans = KMeans(n_clusters=4, random_state=42)
+        kmeans = KMeans(n_clusters=5, random_state=42)
         clusters = kmeans.fit_predict(X)
 
         mood_mapping = self._map_clusters_to_moods(kmeans.cluster_centers_)
@@ -47,19 +47,50 @@ class AudioClassifier:
 
     def _classify_function(self):
         logger.info("Enriching audio metadata with functions")
-        functions = {
-            "background": lambda x: x["energy_mean"] < 0.5
-            and x["complexity_score"] < 0.6,
-            "boss_battle": lambda x: x["energy_mean"] > 0.7 and x["tempo"] > 130,
-            "victory": lambda x: x["tonal_stability"] > 0.7 and x["tempo"] > 110,
-            "puzzle": lambda x: x["complexity_score"] > 0.7 and x["energy_mean"] < 0.4,
-        }
+        # functions = {
+        #     "background": lambda x: (
+        #         0.3 < x["energy_mean"] < 0.6
+        #         and 100 < x["tempo"] < 140
+        #         and x["complexity_score"] < 28  # Not too complex
+        #     ),
+        #     "boss_battle": lambda x: (
+        #         x["energy_mean"] > 0.7
+        #         and x["tempo"] > 130
+        #         and x["complexity_score"] > 25  # Complex composition
+        #     ),
+        #     "victory": lambda x: (
+        #         x["tonal_stability"] > 0.04  # More stable tonality
+        #         and x["tempo"] > 110
+        #         and "Major" in x["key"]  # Victory themes often in major key
+        #         and len(x["beat_times"]) < 50  # Shorter duration
+        #     ),
+        #     "game_over": lambda x: (
+        #         x["tonal_stability"] < 0.03  # Less stable tonality
+        #         and "Minor" in x["key"]  # Often in minor key
+        #         and len(x["beat_times"]) < 20  # Very short duration
+        #     ),
+        #     "sound_effect": lambda x: (
+        #         len(x["beat_times"]) < 10  # Very short duration
+        #         and x["energy_mean"] > 0.1  # Noticeable volume
+        #         and x["zero_crossing_rate_mean"] > 0.02  # More "noisy"
+        #     )
+        # }
 
-        for track in tqdm(self.enriched_metadata):
-            for func, condition in functions.items():
-                if condition(self.enriched_metadata[track]):
-                    self.enriched_metadata[track]["function"] = func
-                    break
+        for name in tqdm(self.enriched_metadata.keys()):
+            track_functions = set()  # Default
+            if "complete" in name.lower():
+                track_functions.add("victory")
+            if "game_over" in name.lower() or "lost_life" in name.lower():
+                track_functions.add("game_over")
+            if "theme" in name.lower():
+                track_functions.add("background")
+            if "effect" in name.lower():
+                track_functions.add("effect")
+
+            # if not track_functions:
+            #     track_functions.add("background")
+
+            self.enriched_metadata[name]["function"] = track_functions
 
     def _get_selected_features(self, track_data):
         return np.array(
@@ -80,16 +111,19 @@ class AudioClassifier:
         for i, features in enumerate(cluster_features):
             tempo = features[0]
             energy = features[2]
-            complexity = features[6]
+            complexity = features[6] * 30
+            tonal_stability = features[7]
 
-            if energy >= 0.7 and tempo >= 120:
-                mood = "energetic"
-            elif energy <= 0.3 and complexity <= 0.5:
-                mood = "calm"
-            elif tempo >= 140 and complexity >= 0.5:
+            if energy > 0.7 and tempo > 140:
                 mood = "intense"
+            elif energy > 0.6 and tempo > 120:
+                mood = "energetic"
+            elif energy < 0.4 and complexity < 20:
+                mood = "calm"
+            elif tonal_stability > 0.06:  # High tonal stability
+                mood = "triumphant"
             else:
-                mood = "balanced"
+                mood = "mysterious"
 
             mood_mapping[i] = mood
 
