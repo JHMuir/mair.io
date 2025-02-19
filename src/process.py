@@ -95,6 +95,7 @@ class AudioProcessor:
                 "tempo_scores": tempo_scores,
                 "tempo_structure": tempo_structure,
                 "spectral_centroid_mean": spectral_centroid_mean,
+                "spectral_contrast_mean": spectral_contrast_mean,
                 "chroma_mean": chroma_mean,
                 "energy_mean": energy_mean,
                 "energy_std": energy_std,
