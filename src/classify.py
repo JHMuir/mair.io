@@ -15,14 +15,14 @@ class AudioClassifier:
         self._classify_function()
         self._classify_mood()
 
-    def print_features(self):
+    def print_features(self) -> None:
         for name in self.enriched_metadata.keys():
             print(
-                f"{name}: (mood:{self.enriched_metadata[name]['mood']}, function: {self.enriched_metadata[name]['function']})\n"
+                f"{name}: (mood: {self.enriched_metadata[name]['mood']}, function: {self.enriched_metadata[name]['function']})\n"
             )
         print(f"Global Averages: {self.global_averages}")
 
-    def get_features(self):
+    def get_features(self) -> dict:
         features = {}
         for name in self.enriched_metadata.keys():
             features[name] = [
@@ -51,7 +51,7 @@ class AudioClassifier:
 
         return global_averages
 
-    def _classify_mood(self):
+    def _classify_mood(self) -> None:
         for data in tqdm(self.enriched_metadata.values()):
             energy = data["energy_mean"]
             tempo = data["tempo"]
@@ -78,18 +78,20 @@ class AudioClassifier:
                 mood = "balanced"
             data["mood"] = mood
 
-    def _classify_function(self):
+    def _classify_function(self) -> None:
         logger.info("Enriching audio metadata with functions")
 
         for name in tqdm(self.enriched_metadata.keys()):
-            track_functions = set()  # Default
+            audio_functions = []  # Default
             if "complete" in name.lower():
-                track_functions.add("victory")
+                audio_functions.append("victory")
             if "game_over" in name.lower() or "lost_life" in name.lower():
-                track_functions.add("game_over")
+                audio_functions.append("game_over")
             if "theme" in name.lower():
-                track_functions.add("background")
+                audio_functions.append("background")
             if "effect" in name.lower():
-                track_functions.add("effect")
+                audio_functions.append("effect")
+            if "hurry" in name.lower():
+                audio_functions.append("hurry")
 
-            self.enriched_metadata[name]["function"] = track_functions
+            self.enriched_metadata[name]["function"] = ", ".join(audio_functions)
