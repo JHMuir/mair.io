@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 class AudioClassifier:
     def __init__(self, audio_metadata: dict):
         self.scaler = StandardScaler()
-        self.enriched_metadata = audio_metadata.copy()
+        self.enriched_metadata = audio_metadata
         self.global_averages = self._compute_global_averages()
         # These functions add 'function' and 'mood' to the metadata
         self._classify_function()
