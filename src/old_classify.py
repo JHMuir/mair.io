@@ -7,7 +7,7 @@ from sklearn.mixture import GaussianMixture
 logger = logging.getLogger(__name__)
 
 
-class AudioClassifier:
+class OldAudioClassifier:
     def __init__(self, audio_metadata: dict):
         self.scaler = StandardScaler()
         self.enriched_metadata = audio_metadata.copy()

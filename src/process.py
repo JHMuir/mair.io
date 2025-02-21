@@ -38,6 +38,9 @@ class AudioProcessor:
             beat_times = librosa.frames_to_time(
                 frames=beat_frames, sr=sampling_rate
             ).tolist()
+            beat_strength = len(beat_times) / (
+                tempo / 60
+            )  # BPM relative to track length
 
             # Rhythm Patterns and Structure
             onset_env = librosa.onset.onset_strength(y=waveform, sr=sampling_rate)
@@ -48,6 +51,7 @@ class AudioProcessor:
                 onset_envelope=onset_env, sr=sampling_rate
             )
             tempo_structure = np.mean(tempogram, axis=1).tolist()
+            rhythm_regularity = np.std(tempo_structure) / np.mean(tempo_structure)
 
             # Spectral Features and Contrast
             spectral_centroids = librosa.feature.spectral_centroid(
@@ -58,6 +62,8 @@ class AudioProcessor:
                 y=waveform, sr=sampling_rate
             )
             spectral_contrast_mean = np.mean(spectral_contrast, axis=1).tolist()
+            bass_contrast = np.mean(spectral_contrast_mean[:3])
+            treble_contrast = np.mean(spectral_contrast_mean[3:])
 
             # Energy/RMS
             energy = librosa.feature.rms(y=waveform)[0]
@@ -70,7 +76,11 @@ class AudioProcessor:
 
             # Mel-frequency cepstral coefficients (MFCCs)
             mfccs = librosa.feature.mfcc(y=waveform, sr=sampling_rate, n_mfcc=13)
-            mfcc_means = np.mean(mfccs, axis=1).tolist()
+            mfcc_profile = np.mean(mfccs, axis=1).tolist()
+            low_mfcc = np.mean(mfcc_profile[:4])
+            mid_mfcc = np.mean(mfcc_profile[4:9])
+            high_mfcc = np.mean(mfcc_profile[9:])
+            mfcc_spread = np.std(mfcc_profile)
 
             # Tonal Features
             tonnetz = librosa.feature.tonnetz(y=waveform, sr=sampling_rate)
@@ -92,15 +102,23 @@ class AudioProcessor:
                 "sampling_rate": sampling_rate,
                 "tempo": int(tempo),
                 "beat_times": beat_times,
+                "beat_strength": beat_strength,
+                "rhythm_regularity": rhythm_regularity,
                 "tempo_scores": tempo_scores,
                 "tempo_structure": tempo_structure,
                 "spectral_centroid_mean": spectral_centroid_mean,
                 "spectral_contrast_mean": spectral_contrast_mean,
+                "bass_contrast": bass_contrast,
+                "treble_contrast": treble_contrast,
                 "chroma_mean": chroma_mean,
                 "energy_mean": energy_mean,
                 "energy_std": energy_std,
                 "zero_crossing_rate_mean": zero_crossing_rate_mean,
-                "mfcc_profile": mfcc_means,
+                "mfcc_profile": mfcc_profile,
+                "low_mfcc": low_mfcc,
+                "mid_mfcc": mid_mfcc,
+                "high_mfcc": high_mfcc,
+                "mfcc_spread": mfcc_spread,
                 "tonal_features": tonnetz_mean,
                 "key": key,
                 "complexity_score": complexity_score,
