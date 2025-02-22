@@ -10,6 +10,9 @@ logger = logging.getLogger(__name__)
 class AudioProcessor:
     def __init__(self, audio_files: list[str]):
         self.audio_metadata = self._create_metadata(audio_files=audio_files)
+        self.metadata_averages = self._create_metadata_averages(
+            audio_metadata=self.audio_metadata
+        )
 
     def print_metadata(self) -> None:
         for name in self.audio_metadata.keys():
@@ -122,6 +125,26 @@ class AudioProcessor:
             }
         logger.info("Audio feature extraction complete.")
         return audio_metadata
+
+    def _create_metadata_averages(self, audio_metadata: dict):
+        feature_lists = {}
+        for data in audio_metadata.values():
+            for feature_name, value in data.items():
+                if feature_name in ["waveform", "key"]:
+                    continue
+                if isinstance(value, (int, float)):
+                    if feature_name not in feature_lists:
+                        feature_lists[feature_name] = []
+                    feature_lists[feature_name].append(value)
+
+        metadata_averages = {}
+        for feature_name, values in feature_lists.items():
+            if isinstance(values[0], (int, float)):
+                metadata_averages[feature_name] = float(np.mean(values))
+            else:
+                continue
+
+        return metadata_averages
 
     def _detect_key(self, chromagram) -> str:
         chroma_vals = [np.sum(chromagram[i]) for i in range(12)]

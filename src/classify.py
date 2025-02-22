@@ -1,15 +1,14 @@
 import logging
-import numpy as np
 from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 
 
 class AudioClassifier:
-    def __init__(self, audio_metadata: dict):
+    def __init__(self, audio_metadata: dict, metadata_averages: dict):
         self.moods = self._classify_mood(
             audio_metadata=audio_metadata,
-            averages=self._compute_averages(audio_metadata),
+            averages=metadata_averages,
         )
         self.in_game_functions = self._classify_function(audio_metadata=audio_metadata)
         self.classified_features = {
@@ -23,26 +22,6 @@ class AudioClassifier:
                 f"{name}: (mood: {self.moods[name]}, function: {self.in_game_functions[name]})\n"
             )
 
-    def _compute_averages(self, audio_metadata: dict) -> dict:
-        energies = []
-        tempos = []
-        complexities = []
-        tonal_stabilities = []
-
-        for data in audio_metadata.values():
-            energies.append(data["energy_mean"])
-            tempos.append(data["tempo"])
-            complexities.append(data["complexity_score"])
-            tonal_stabilities.append(data["tonal_stability"])
-
-        global_averages = {}
-        global_averages["energy"] = np.mean(energies)
-        global_averages["tempo"] = np.mean(tempos)
-        global_averages["complexity"] = np.mean(complexities)
-        global_averages["tonal_stability"] = np.mean(tonal_stabilities)
-
-        return global_averages
-
     def _classify_mood(self, audio_metadata: dict, averages: dict) -> None:
         mood_dict = {}
         for name in tqdm(audio_metadata.keys()):
@@ -52,14 +31,19 @@ class AudioClassifier:
             tonal = audio_metadata[name]["tonal_stability"]
 
             if (
-                energy > averages["energy"]
+                energy > averages["energy_mean"]
                 and tempo > averages["tempo"]
-                and complexity > averages["complexity"]
+                and complexity > averages["complexity_score"]
             ):
                 mood = "energetic"
-            elif tonal > averages["tonal_stability"] and energy > averages["energy"]:
+            elif (
+                tonal > averages["tonal_stability"] and energy > averages["energy_mean"]
+            ):
                 mood = "triumphant"
-            elif energy < averages["energy"] and complexity < averages["complexity"]:
+            elif (
+                energy < averages["energy_mean"]
+                and complexity < averages["complexity_score"]
+            ):
                 mood = "mysterious"
             else:
                 mood = "balanced"
