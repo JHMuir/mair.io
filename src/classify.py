@@ -1,43 +1,38 @@
 import logging
 import numpy as np
 from tqdm import tqdm
-from sklearn.preprocessing import StandardScaler
 
 logger = logging.getLogger(__name__)
 
 
 class AudioClassifier:
     def __init__(self, audio_metadata: dict):
-        self.scaler = StandardScaler()
-        self.enriched_metadata = audio_metadata
-        self.global_averages = self._compute_global_averages()
-        # These functions add 'function' and 'mood' to the metadata
-        self._classify_function()
-        self._classify_mood()
+        self.moods = self._classify_mood(
+            audio_metadata=audio_metadata,
+            averages=self._compute_averages(audio_metadata),
+        )
+        self.in_game_functions = self._classify_function(audio_metadata=audio_metadata)
+        self.classified_features = {
+            name: [self.moods[name], self.in_game_functions[name]]
+            for name in audio_metadata.keys()
+        }
 
     def print_features(self) -> None:
-        for name in self.enriched_metadata.keys():
+        for name in self.classified_features.keys():
             print(
-                f"{name}: (mood: {self.enriched_metadata[name]['mood']}, function: {self.enriched_metadata[name]['function']})\n"
+                f"{name}: (mood: {self.moods[name]}, function: {self.in_game_functions[name]})\n"
             )
-        print(f"Global Averages: {self.global_averages}")
 
     def get_features(self) -> dict:
-        features = {}
-        for name in self.enriched_metadata.keys():
-            features[name] = [
-                self.enriched_metadata[name]["mood"],
-                self.enriched_metadata[name]["function"],
-            ]
-        return features
+        return self.classified_features
 
-    def _compute_global_averages(self) -> dict:
+    def _compute_averages(self, audio_metadata: dict) -> dict:
         energies = []
         tempos = []
         complexities = []
         tonal_stabilities = []
 
-        for data in self.enriched_metadata.values():
+        for data in audio_metadata.values():
             energies.append(data["energy_mean"])
             tempos.append(data["tempo"])
             complexities.append(data["complexity_score"])
@@ -51,37 +46,36 @@ class AudioClassifier:
 
         return global_averages
 
-    def _classify_mood(self) -> None:
-        for data in tqdm(self.enriched_metadata.values()):
-            energy = data["energy_mean"]
-            tempo = data["tempo"]
-            complexity = data["complexity_score"]
-            tonal = data["tonal_stability"]
+    def _classify_mood(self, audio_metadata: dict, averages: dict) -> None:
+        mood_dict = {}
+        for name in tqdm(audio_metadata.keys()):
+            energy = audio_metadata[name]["energy_mean"]
+            tempo = audio_metadata[name]["tempo"]
+            complexity = audio_metadata[name]["complexity_score"]
+            tonal = audio_metadata[name]["tonal_stability"]
 
             if (
-                energy > self.global_averages["energy"]
-                and tempo > self.global_averages["tempo"]
-                and complexity > self.global_averages["complexity"]
+                energy > averages["energy"]
+                and tempo > averages["tempo"]
+                and complexity > averages["complexity"]
             ):
                 mood = "energetic"
-            elif (
-                tonal > self.global_averages["tonal_stability"]
-                and energy > self.global_averages["energy"]
-            ):
+            elif tonal > averages["tonal_stability"] and energy > averages["energy"]:
                 mood = "triumphant"
-            elif (
-                energy < self.global_averages["energy"]
-                and complexity < self.global_averages["complexity"]
-            ):
+            elif energy < averages["energy"] and complexity < averages["complexity"]:
                 mood = "mysterious"
             else:
                 mood = "balanced"
-            data["mood"] = mood
+            # Adding the mood value to our original audio metadata
+            audio_metadata[name]["mood"] = mood
+            # Adding the mood value to AudioClassifier's mood dictionary
+            mood_dict[name] = mood
+        return mood_dict
 
-    def _classify_function(self) -> None:
+    def _classify_function(self, audio_metadata: dict) -> None:
         logger.info("Enriching audio metadata with functions")
-
-        for name in tqdm(self.enriched_metadata.keys()):
+        in_game_functions = {}
+        for name in tqdm(audio_metadata.keys()):
             audio_functions = []  # Default
             if "complete" in name.lower():
                 audio_functions.append("victory")
@@ -94,4 +88,6 @@ class AudioClassifier:
             if "hurry" in name.lower():
                 audio_functions.append("hurry")
 
-            self.enriched_metadata[name]["function"] = ", ".join(audio_functions)
+            audio_metadata[name]["function"] = ",".join(audio_functions)
+            in_game_functions[name] = ",".join(audio_functions)
+        return in_game_functions

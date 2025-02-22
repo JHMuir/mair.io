@@ -26,7 +26,7 @@ class AudioProcessor:
     def get_audio_metadata(self) -> dict:
         return self._audio_metadata
 
-    def _create_metadata(self) -> dict:  # isfile(join(r"data\music", file))
+    def _create_metadata(self) -> dict:
         audio_metadata = {}
         logger.info("Processing audio tracks and extracting features.")
         for file in tqdm(self._audio_files):
@@ -127,7 +127,7 @@ class AudioProcessor:
         logger.info("Audio feature extraction complete.")
         return audio_metadata
 
-    def _detect_key(self, chromagram):
+    def _detect_key(self, chromagram) -> str:
         chroma_vals = [np.sum(chromagram[i]) for i in range(12)]
         pitches = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
         key_freq = {pitches[i]: chroma_vals[i] for i in range(12)}
