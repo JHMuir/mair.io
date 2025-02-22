@@ -23,9 +23,6 @@ class AudioClassifier:
                 f"{name}: (mood: {self.moods[name]}, function: {self.in_game_functions[name]})\n"
             )
 
-    def get_features(self) -> dict:
-        return self.classified_features
-
     def _compute_averages(self, audio_metadata: dict) -> dict:
         energies = []
         tempos = []

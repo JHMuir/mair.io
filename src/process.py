@@ -9,13 +9,12 @@ logger = logging.getLogger(__name__)
 
 class AudioProcessor:
     def __init__(self, audio_files: list[str]):
-        self._audio_files = audio_files
-        self._audio_metadata = self._create_metadata()
+        self.audio_metadata = self._create_metadata(audio_files=audio_files)
 
     def print_metadata(self) -> None:
-        for file in self._audio_files:
-            logger.info(f"Printing features for {file}")
-            for feature_name, value in self._audio_metadata[file].items():
+        for name in self.audio_metadata.keys():
+            logger.info(f"Printing features for {name}")
+            for feature_name, value in self.audio_metadata[name].items():
                 if isinstance(value, list):
                     print(f"{feature_name}: {len(value)} values")
                     if len(value) < 5:
@@ -23,13 +22,10 @@ class AudioProcessor:
                 else:
                     print(f"{feature_name}: {value}")
 
-    def get_audio_metadata(self) -> dict:
-        return self._audio_metadata
-
-    def _create_metadata(self) -> dict:
+    def _create_metadata(self, audio_files) -> dict:
         audio_metadata = {}
         logger.info("Processing audio tracks and extracting features.")
-        for file in tqdm(self._audio_files):
+        for file in tqdm(audio_files):
             # Extracting features from audio file
             waveform, sampling_rate = librosa.load(path=join(r"data\music", file))
 
