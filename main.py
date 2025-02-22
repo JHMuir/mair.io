@@ -17,6 +17,7 @@ if __name__ == "__main__":
     # audio_pipeline.processor.print_metadata()
     # audio_pipeline.classifier.print_features()
     audio_pipeline.print_descriptions()
+    audio_pipeline.create_metadata_json()
     # print(
     #     client.create_response(
     #         query="Explain to me who Mario is in a few short sentences"

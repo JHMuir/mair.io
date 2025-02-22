@@ -1,3 +1,4 @@
+import json
 from .process import AudioProcessor
 from .classify import AudioClassifier
 
@@ -11,9 +12,24 @@ class AudioPipeline:
         )
 
     def create_metadata_json(self, path: str = "audio_metadata.json") -> None:
-        pass
+        processed_metadata = {}
+        for name, data in self.processor.audio_metadata.items():
+            track_data = {}
+            for feature_name, value in data.items():
+                if feature_name in ["waveform"]:
+                    continue
+                if isinstance(value, (int, float, str)):
+                    track_data[feature_name] = value
 
-    def _create_text_description(self, name, metadata):
+            track_data["description"] = self._create_text_description(
+                name=name, metadata=data
+            )
+            processed_metadata[name] = track_data
+
+        with open(path, "w") as f:
+            json.dump(processed_metadata, f, indent=4)
+
+    def _create_text_description(self, name, metadata) -> str:
         description = (
             f"This track is named {name}."
             f"This is a {metadata['mood']} {metadata['function']} track in {metadata['key']} "
