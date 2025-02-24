@@ -5,3 +5,7 @@ python-dotenv
 tqdm
 playsound3
 librosa
+numpy
+langchain
+langchain-community
+faiss-cpu
