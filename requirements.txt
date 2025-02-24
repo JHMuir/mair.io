@@ -8,5 +8,6 @@ librosa
 numpy
 langchain
 langchain-community
-langchain-google-vertexai
+langchain-google-genai
 faiss-cpu
+jq
