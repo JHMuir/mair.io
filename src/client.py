@@ -12,7 +12,13 @@ logger = logging.getLogger(__name__)
 
 
 class GoogleClient:
-    def __init__(self, api_key: str, audio_files: list[str], model="gemini-2.0-flash"):
+    def __init__(
+        self,
+        api_key: str,
+        audio_files: list[str] = None,
+        model="gemini-2.0-flash",
+        document_path: str | list[str] = None,
+    ):
         logger.info("Initializing Gemini client.")
         self._client = genai.Client(api_key=api_key)
         self.model = init_chat_model(model=model, model_provider="google_genai")
@@ -30,6 +36,9 @@ class GoogleClient:
             index=faiss.IndexFlatL2(len(self.embeddings.embed_query("hello world"))),
             docstore=InMemoryDocstore(),
             index_to_docstore_id={},
+        )
+        self.vector_store.add_documents(
+            documents=self._load_documents(document_path=document_path)
         )
 
     # def parse_music_data(self) -> list:
@@ -52,11 +61,22 @@ class GoogleClient:
     #     # print(music_dict)
     #     return music_files, music_dict
 
-    def load_documents(self, path: str):
+    def _load_documents(self, document_path: str | list[str]):
         logger.info("Loading audio_metadata into client.")
-        loader = JSONLoader(file_path=path, jq_schema=".[]", text_content=False)
-        docs = loader.load()
-        print(docs)
+        loader = JSONLoader(
+            file_path=document_path, jq_schema=".[]", text_content=False
+        )
+        # Currently, our audio_metadata is not large enough to warrant using a text splitter (I think)
+        # Our JSONLoader already splits the json into smaller documents.
+        # text_splitter = RecursiveJsonSplitter(max_chunk_size=1000)
+        if isinstance(document_path, str):
+            docs = loader.load()
+            return docs
+        elif isinstance(document_path, list):
+            docs_list = []
+            for doc_path in document_path:
+                docs_list.append(loader.load(doc_path))
+            return docs_list
 
     def create_response(self, query: str) -> str:
         response = self._client.models.generate_content(
