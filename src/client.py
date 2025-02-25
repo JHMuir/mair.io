@@ -1,5 +1,4 @@
 import logging
-from pprint import pprint
 from google import genai
 from google.genai import types
 from langchain.chat_models import init_chat_model
@@ -14,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 class GoogleClient:
     def __init__(self, api_key: str, audio_files: list[str], model="gemini-2.0-flash"):
+        logger.info("Initializing Gemini client.")
         self._client = genai.Client(api_key=api_key)
         self.model = init_chat_model(model=model, model_provider="google_genai")
         self.audio_files = audio_files
@@ -53,9 +53,10 @@ class GoogleClient:
     #     return music_files, music_dict
 
     def load_documents(self, path: str):
-        loader = JSONLoader(file_path=path, jq_schema=".content")
-        data = loader.load()
-        pprint(data)
+        logger.info("Loading audio_metadata into client.")
+        loader = JSONLoader(file_path=path, jq_schema=".[]", text_content=False)
+        docs = loader.load()
+        print(docs)
 
     def create_response(self, query: str) -> str:
         response = self._client.models.generate_content(
