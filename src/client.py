@@ -1,23 +1,30 @@
 import logging
 from google import genai
 from google.genai import types
+from langchain_core.documents import Document
 from langchain.chat_models import init_chat_model
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.document_loaders import JSONLoader
 from langchain_community.vectorstores import FAISS
+from typing_extensions import List, TypedDict
 import faiss
 
 logger = logging.getLogger(__name__)
+
+
+class ClientState(TypedDict):
+    query: str
+    context: List[Document]
+    response: str
 
 
 class GoogleClient:
     def __init__(
         self,
         api_key: str,
-        audio_files: list[str] = None,
+        audio_files: List[str] = None,
         model="gemini-2.0-flash",
-        document_path: str | list[str] = None,
     ):
         logger.info("Initializing Gemini client.")
         self._client = genai.Client(api_key=api_key)
@@ -36,9 +43,6 @@ class GoogleClient:
             index=faiss.IndexFlatL2(len(self.embeddings.embed_query("hello world"))),
             docstore=InMemoryDocstore(),
             index_to_docstore_id={},
-        )
-        self.vector_store.add_documents(
-            documents=self._load_documents(document_path=document_path)
         )
 
     # def parse_music_data(self) -> list:
@@ -61,7 +65,9 @@ class GoogleClient:
     #     # print(music_dict)
     #     return music_files, music_dict
 
-    def _load_documents(self, document_path: str | list[str]):
+    def load_documents(
+        self, document_path: str | List[str]
+    ) -> List[Document] | List[List[Document]]:
         logger.info("Loading audio_metadata into client.")
         loader = JSONLoader(
             file_path=document_path, jq_schema=".[]", text_content=False
@@ -71,11 +77,13 @@ class GoogleClient:
         # text_splitter = RecursiveJsonSplitter(max_chunk_size=1000)
         if isinstance(document_path, str):
             docs = loader.load()
+            self.vector_store.add_documents(documents=docs)
             return docs
-        elif isinstance(document_path, list):
+        elif isinstance(document_path, List):
             docs_list = []
             for doc_path in document_path:
                 docs_list.append(loader.load(doc_path))
+            self.vector_store.add_documents(documents=docs_list)
             return docs_list
 
     def create_response(self, query: str) -> str:

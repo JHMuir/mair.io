@@ -14,3 +14,4 @@ if __name__ == "__main__":
     client = GoogleClient(
         api_key=api_key, audio_files=audio_files, document_path="audio_metadata.json"
     )
+    client.load_documents()
