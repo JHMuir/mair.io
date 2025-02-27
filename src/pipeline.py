@@ -11,7 +11,7 @@ class AudioPipeline:
             metadata_averages=self.processor.metadata_averages,
         )
 
-    def create_metadata_json(self, path: str = "audio_metadata.json") -> None:
+    def create_metadata_json(self, path: str = "audio_metadata.json") -> str:
         processed_metadata = {}
         for name, data in self.processor.audio_metadata.items():
             track_data = {}
@@ -28,6 +28,8 @@ class AudioPipeline:
 
         with open(path, "w") as f:
             json.dump(processed_metadata, f, indent=4)
+
+        return path
 
     def _create_text_description(self, name, metadata) -> str:
         description = (
