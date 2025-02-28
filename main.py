@@ -1,12 +1,21 @@
 import os
+import logging
 from dotenv import load_dotenv
-from src.client import GoogleClient
-from src.pipeline import AudioPipeline
-from src.utils import setup_logging
+from llm.client import GoogleClient
+from mir.pipeline import AudioPipeline
 
 load_dotenv()
 
 api_key = os.environ["GOOGLE_API_KEY"]
+
+
+def setup_logging(level=logging.INFO):
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+
 
 if __name__ == "__main__":
     setup_logging()

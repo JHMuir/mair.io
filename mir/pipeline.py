@@ -1,6 +1,6 @@
 import json
-from .process import AudioProcessor
-from .classify import AudioClassifier
+from mir.process import AudioProcessor
+from mir.classify import AudioClassifier
 
 
 class AudioPipeline:
