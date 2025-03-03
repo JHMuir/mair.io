@@ -12,3 +12,4 @@ langgraph
 langchain-google-genai
 faiss-cpu
 jq
+flask

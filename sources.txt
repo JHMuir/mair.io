@@ -1,2 +1,4 @@
 Librosa: https://github.com/librosa/librosa
 Key Detection Algo: https://github.com/jackmcarthur/musical-key-finder
+Music Caps: https://arxiv.org/abs/2307.16372
+LLark: https://arxiv.org/abs/2310.07160
