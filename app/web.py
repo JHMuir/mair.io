@@ -1,9 +1,11 @@
-from flask import Flask
+from fastapi import FastAPI
 
 
-class FlaskApp:
+class GeminiAPI:
     def __init__(self):
-        self.app = Flask(__name__)
+        self.app = FastAPI(
+            title="MAIR.IO App", summary="Endpoint for MAIR.IO's backend"
+        )
         self.setup_routes()
 
     def setup_routes(self):
