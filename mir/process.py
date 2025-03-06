@@ -1,6 +1,7 @@
 from os.path import join
 import logging
 import numpy as np
+from numpy.typing import NDArray
 import librosa
 from tqdm import tqdm
 
@@ -9,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 class AudioProcessor:
     def __init__(self, audio_files: list[str]):
+        logger.info("Extracting metadata from audio tracks")
         self.audio_metadata = self._create_metadata(audio_files=audio_files)
         self.metadata_averages = self._create_metadata_averages(
             audio_metadata=self.audio_metadata
@@ -25,7 +27,7 @@ class AudioProcessor:
                 else:
                     print(f"{feature_name}: {value}")
 
-    def _create_metadata(self, audio_files) -> dict:
+    def _create_metadata(self, audio_files: list[str]) -> dict:
         audio_metadata = {}
         logger.info("Processing audio tracks and extracting features.")
         for file in tqdm(audio_files):
@@ -126,7 +128,7 @@ class AudioProcessor:
         logger.info("Audio feature extraction complete.")
         return audio_metadata
 
-    def _create_metadata_averages(self, audio_metadata: dict):
+    def _create_metadata_averages(self, audio_metadata: dict) -> dict:
         feature_lists = {}
         for data in audio_metadata.values():
             for feature_name, value in data.items():
@@ -146,7 +148,7 @@ class AudioProcessor:
 
         return metadata_averages
 
-    def _detect_key(self, chromagram) -> str:
+    def _detect_key(self, chromagram: NDArray) -> str:
         chroma_vals = [np.sum(chromagram[i]) for i in range(12)]
         pitches = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
         key_freq = {pitches[i]: chroma_vals[i] for i in range(12)}

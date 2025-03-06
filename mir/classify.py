@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 
 class AudioClassifier:
     def __init__(self, audio_metadata: dict, metadata_averages: dict):
+        logger.info("Classifying audio tracks with mood and function")
         self.moods = self._classify_mood(
             audio_metadata=audio_metadata,
             averages=metadata_averages,
@@ -22,7 +23,7 @@ class AudioClassifier:
                 f"{name}: (mood: {self.moods[name]}, function: {self.in_game_functions[name]})\n"
             )
 
-    def _classify_mood(self, audio_metadata: dict, averages: dict) -> None:
+    def _classify_mood(self, audio_metadata: dict, averages: dict) -> dict:
         mood_dict = {}
         for name in tqdm(audio_metadata.keys()):
             energy = audio_metadata[name]["energy_mean"]
@@ -53,7 +54,7 @@ class AudioClassifier:
             mood_dict[name] = mood
         return mood_dict
 
-    def _classify_function(self, audio_metadata: dict) -> None:
+    def _classify_function(self, audio_metadata: dict) -> dict:
         logger.info("Enriching audio metadata with functions")
         in_game_functions = {}
         for name in tqdm(audio_metadata.keys()):

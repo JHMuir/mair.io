@@ -8,7 +8,8 @@ from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_community.document_loaders import JSONLoader
 from langchain_community.vectorstores import FAISS
 from langgraph.graph import START, StateGraph
-from typing_extensions import List, TypedDict
+from langgraph.graph.state import CompiledStateGraph
+from typing_extensions import TypedDict
 import faiss
 
 logger = logging.getLogger(__name__)
@@ -16,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class ClientState(TypedDict):
     query: str
-    context: List[Document]
+    context: list[Document]
     response: str
 
 
@@ -25,10 +26,9 @@ class GeminiClient:
         self,
         api_key: str,
         audio_metadata_path: str,
-        audio_files: List[str] = None,
+        audio_files: list[str] = None,
         model: str = "gemini-2.0-flash",
     ):
-        logger.info("Initializing Gemini client.")
         self._client = genai.Client(api_key=api_key)
         self.model = init_chat_model(model=model, model_provider="google_genai")
         self.audio_files = audio_files
@@ -60,15 +60,16 @@ class GeminiClient:
         )
         self.graph = self._compile()
 
-    def invoke(self, query):
+    def invoke(self, query) -> dict:
         result = self.graph.invoke({"query": query})
         return result
 
-    def retrieve(self, state: ClientState):
+    def retrieve(self, state: ClientState) -> dict:
+        # Here if you want to change the number of retrieved docs
         retrieved_docs = self.vector_store.similarity_search(state["query"])
         return {"context": retrieved_docs}
 
-    def generate(self, state: ClientState):
+    def generate(self, state: ClientState) -> dict:
         docs_content = "\n\n".join(doc.page_content for doc in state["context"])
         messages = self.prompt.invoke(
             {"query": state["query"], "context": docs_content}
@@ -76,7 +77,8 @@ class GeminiClient:
         response = self.model.invoke(messages)
         return {"response": response.content}
 
-    def _compile(self):
+    def _compile(self) -> CompiledStateGraph:
+        logger.info("Building GeminiClient graph")
         graph_builder = StateGraph(ClientState).add_sequence(
             [self.retrieve, self.generate]
         )
@@ -85,8 +87,8 @@ class GeminiClient:
         return graph
 
     def _store_documents(
-        self, document_path: str | List[str]
-    ) -> List[Document] | List[List[Document]]:
+        self, document_path: str | list[str]
+    ) -> list[Document] | list[list[Document]]:
         logger.info("Loading audio_metadata into client.")
         loader = JSONLoader(
             file_path=document_path, jq_schema=".[]", text_content=False
@@ -98,7 +100,7 @@ class GeminiClient:
             docs = loader.load()
             self.vector_store.add_documents(documents=docs)
             return docs
-        elif isinstance(document_path, List):
+        elif isinstance(document_path, list):
             docs_list = []
             for doc_path in document_path:
                 docs_list.append(loader.load(doc_path))

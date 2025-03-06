@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 
 class AudioPipeline:
     def __init__(self, audio_files: list):
+        logger.info("Initializing AudioPipeline")
         self.default_metadata_path = r"data\metadata\audio_metadata.json"
         self.audio_files = audio_files
 
@@ -16,8 +17,10 @@ class AudioPipeline:
             logger.info(
                 f"Cached metadata found at {self.default_metadata_path}, loading from file"
             )
-
             audio_metadata = self._load_metadata_from_file()
+            logger.info(
+                "Initializing AudioPipeline and AudioClassifier with cached metadata"
+            )
             self.processor = self._create_processor_from_cache(
                 audio_metadata=audio_metadata
             )
@@ -26,11 +29,13 @@ class AudioPipeline:
             )
         else:
             logger.info("Cached metadata not found, generating new metadata")
-
             self.processor = AudioProcessor(audio_files=audio_files)
             self.classifier = AudioClassifier(
                 audio_metadata=self.processor.audio_metadata,
                 metadata_averages=self.processor.metadata_averages,
+            )
+            logger.info(
+                "Initialized AudioPipeline and AudioClassifier with new metadata"
             )
 
     def create_metadata_json(

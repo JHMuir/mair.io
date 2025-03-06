@@ -16,24 +16,26 @@ class GeminiApp:
     def __init__(
         self, api_key: str, audio_metadata_path: str, model: str = "gemini-2.0-flash"
     ):
-        self.app = FastAPI(
-            title="MAIR.IO API", summary="Endpoint for MAIR.IO's backend"
-        )
+        logger.info("Initializing GeminiClient.")
         self.client = GeminiClient(
             api_key=api_key, audio_metadata_path=audio_metadata_path, model=model
         )
+        logger.info("Initializing MAIR.IO API/App")
+        self.app = FastAPI(
+            title="MAIR.IO API", summary="Endpoint for MAIR.IO's backend"
+        )
         self.setup_routes()
 
-    def setup_routes(self):
+    def setup_routes(self) -> None:
         self.app.get("/")(self.hello)
         self.app.post("/chat")(self.chat_query)
 
-    async def chat_query(self, request: QueryRequest):
+    async def chat_query(self, request: QueryRequest) -> dict:
         result = self.client.invoke(request.query)
         return {"response": result["response"], "context": result["context"]}
 
-    async def hello(self):
+    async def hello(self) -> dict:
         return {"message": "Hello World"}
 
-    def run(self, host: str = "127.0.0.1", port: int = 8000):
+    def run(self, host: str = "127.0.0.1", port: int = 8000) -> None:
         uvicorn.run(self.app, host=host, port=port)
