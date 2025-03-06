@@ -20,11 +20,11 @@ class ClientState(TypedDict):
     response: str
 
 
-class GoogleClient:
+class GeminiClient:
     def __init__(
         self,
         api_key: str,
-        document_path: str = None,
+        audio_metadata_path: str,
         audio_files: List[str] = None,
         model: str = "gemini-2.0-flash",
     ):
@@ -41,7 +41,7 @@ class GoogleClient:
             docstore=InMemoryDocstore(),
             index_to_docstore_id={},
         )
-        self.documents = self._store_documents(document_path=document_path)
+        self.documents = self._store_documents(document_path=audio_metadata_path)
         self.prompt = PromptTemplate.from_template(
             """
             You are an AI assistant built to answer questions about video game soundtracks.
