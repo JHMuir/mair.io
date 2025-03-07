@@ -50,10 +50,19 @@ class AudioPipeline:
             for name, data in self.processor.audio_metadata.items():
                 track_data = {}
                 for feature_name, value in data.items():
-                    # TODO: add missing values from original audio_metadata to the json
-                    if feature_name in ["waveform"]:
+                    print(
+                        f"Name:{feature_name}, Type: {type(value)}, Values: {value}\n"
+                    )
+                    # Excluding certain excessively long values
+                    if feature_name in [
+                        "waveform",
+                        "tempo_scores",
+                        "tempo_structure",
+                        "chroma_mean",
+                        "beat_times",
+                    ]:
                         continue
-                    if isinstance(value, (int, float, str)):
+                    if isinstance(value, (int, float, str, list)):
                         track_data[feature_name] = value
 
                 track_data["description"] = self._create_text_description(
