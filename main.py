@@ -19,6 +19,8 @@ def setup_logging(level=logging.INFO):
 
 if __name__ == "__main__":
     setup_logging()
+    logger = logging.getLogger(__name__)
+    logger.info("Starting main process")
     audio_files = [audio_file for audio_file in os.listdir(r"data\music")]
 
     # AudioPipeline extracts metadata from our audio files and creates a json for our client to parse

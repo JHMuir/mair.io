@@ -50,7 +50,12 @@
         "tonal_stability": 0.027416653108929788,
         "mood": "energetic",
         "function": "victory",
-        "description": "This track is named Complete_Castle.wav.This is a energetic victory track in C Minor with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Complete_Castle.wav.This is a energetic victory track in C Minor with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 6.315827664399094,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Complete_Level.wav": {
         "sampling_rate": 22050,
@@ -103,7 +108,12 @@
         "tonal_stability": 0.050903827245428336,
         "mood": "energetic",
         "function": "victory",
-        "description": "This track is named Complete_Level.wav.This is a energetic victory track in C Major with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Complete_Level.wav.This is a energetic victory track in C Major with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 5.131609977324263,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Bowser_Fall.wav": {
         "sampling_rate": 22050,
@@ -156,7 +166,12 @@
         "tonal_stability": 0.031618410310658235,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Bowser_Fall.wav.This is a mysterious effect track in C# Minor with a tempo of 73 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Bowser_Fall.wav.This is a mysterious effect track in C# Minor with a tempo of 73 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.8126984126984127,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Bowser_Fire.wav": {
         "sampling_rate": 22050,
@@ -209,7 +224,12 @@
         "tonal_stability": 0.014047846322247265,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Bowser_Fire.wav.This is a mysterious effect track in C Minor with a tempo of 161 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Bowser_Fire.wav.This is a mysterious effect track in C Minor with a tempo of 161 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.37151927437641724,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Brick_Smash.wav": {
         "sampling_rate": 22050,
@@ -262,7 +282,12 @@
         "tonal_stability": 0.032696259076768056,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Brick_Smash.wav.This is a mysterious effect track in C Minor with a tempo of 184 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Brick_Smash.wav.This is a mysterious effect track in C Minor with a tempo of 184 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.6501587301587302,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Bump.wav": {
         "sampling_rate": 22050,
@@ -315,7 +340,12 @@
         "tonal_stability": 0.027856260485595884,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Bump.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Bump.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.5108390022675736,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Coin.wav": {
         "sampling_rate": 22050,
@@ -368,7 +398,12 @@
         "tonal_stability": 0.06400873065617543,
         "mood": "balanced",
         "function": "effect",
-        "description": "This track is named Effect_Coin.wav.This is a balanced effect track in C Major with a tempo of 89 BPM. It has low energy and complex structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Coin.wav.This is a balanced effect track in C Major with a tempo of 89 BPM. It has low energy and complex structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.6733786848072563,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Fireball.wav": {
         "sampling_rate": 22050,
@@ -421,7 +456,12 @@
         "tonal_stability": 0.04123322641621884,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Fireball.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Fireball.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.5108390022675736,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Fireworks.wav": {
         "sampling_rate": 22050,
@@ -474,7 +514,12 @@
         "tonal_stability": 0.024950440368424337,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Fireworks.wav.This is a mysterious effect track in B Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Fireworks.wav.This is a mysterious effect track in B Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.5108390022675736,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Flagpole.wav": {
         "sampling_rate": 22050,
@@ -527,7 +572,12 @@
         "tonal_stability": 0.026928218879154368,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Flagpole.wav.This is a mysterious effect track in C# Minor with a tempo of 57 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Flagpole.wav.This is a mysterious effect track in C# Minor with a tempo of 57 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 2.089795918367347,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Hurry.wav": {
         "sampling_rate": 22050,
@@ -580,7 +630,12 @@
         "tonal_stability": 0.02237168506343162,
         "mood": "energetic",
         "function": "effect,hurry",
-        "description": "This track is named Effect_Hurry.wav.This is a energetic effect,hurry track in G Major with a tempo of 198 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Effect_Hurry.wav.This is a energetic effect,hurry track in G Major with a tempo of 198 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 1.811156462585034,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Jump_Big.wav": {
         "sampling_rate": 22050,
@@ -633,7 +688,12 @@
         "tonal_stability": 0.026635200097337483,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Jump_Big.wav.This is a mysterious effect track in G# Major with a tempo of 287 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Jump_Big.wav.This is a mysterious effect track in G# Major with a tempo of 287 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.4179591836734694,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Jump_Small.wav": {
         "sampling_rate": 22050,
@@ -686,7 +746,12 @@
         "tonal_stability": 0.03557344319933444,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Jump_Small.wav.This is a mysterious effect track in C# Major with a tempo of 287 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Jump_Small.wav.This is a mysterious effect track in C# Major with a tempo of 287 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.2089795918367347,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Kick.wav": {
         "sampling_rate": 22050,
@@ -739,7 +804,12 @@
         "tonal_stability": 0.04579241334885474,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Kick.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Kick.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.5108390022675736,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Lost_Life.wav": {
         "sampling_rate": 22050,
@@ -792,7 +862,12 @@
         "tonal_stability": 0.026924967453583967,
         "mood": "balanced",
         "function": "game_over,effect",
-        "description": "This track is named Effect_Lost_Life.wav.This is a balanced game_over,effect track in C# Major with a tempo of 135 BPM. It has high energy and simple structure. The track features subtle bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Lost_Life.wav.This is a balanced game_over,effect track in C# Major with a tempo of 135 BPM. It has high energy and simple structure. The track features subtle bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 2.6470748299319724,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_One_Up.wav": {
         "sampling_rate": 22050,
@@ -845,7 +920,12 @@
         "tonal_stability": 0.02769752779694733,
         "mood": "balanced",
         "function": "effect",
-        "description": "This track is named Effect_One_Up.wav.This is a balanced effect track in C Minor with a tempo of 143 BPM. It has low energy and complex structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_One_Up.wav.This is a balanced effect track in C Minor with a tempo of 143 BPM. It has low energy and complex structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.8359183673469388,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Pause.wav": {
         "sampling_rate": 22050,
@@ -898,7 +978,12 @@
         "tonal_stability": 0.0413742933004182,
         "mood": "balanced",
         "function": "effect",
-        "description": "This track is named Effect_Pause.wav.This is a balanced effect track in C Major with a tempo of 198 BPM. It has low energy and complex structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Pause.wav.This is a balanced effect track in C Major with a tempo of 198 BPM. It has low energy and complex structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.30185941043083897,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_PowerDown_or_PipeDown.wav": {
         "sampling_rate": 22050,
@@ -951,7 +1036,12 @@
         "tonal_stability": 0.015776296741434548,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_PowerDown_or_PipeDown.wav.This is a mysterious effect track in D Minor with a tempo of 107 BPM. It has low energy and simple structure. The track features subtle bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_PowerDown_or_PipeDown.wav.This is a mysterious effect track in D Minor with a tempo of 107 BPM. It has low energy and simple structure. The track features subtle bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 1.1145578231292517,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Power_Up.wav": {
         "sampling_rate": 22050,
@@ -1004,7 +1094,12 @@
         "tonal_stability": 0.027584273673641663,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Power_Up.wav.This is a mysterious effect track in C# Minor with a tempo of 103 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Power_Up.wav.This is a mysterious effect track in C# Minor with a tempo of 103 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.5804988662131519,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Power_Up_Appears.wav": {
         "sampling_rate": 22050,
@@ -1057,7 +1152,12 @@
         "tonal_stability": 0.02598494304705143,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Power_Up_Appears.wav.This is a mysterious effect track in C# Minor with a tempo of 172 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Power_Up_Appears.wav.This is a mysterious effect track in C# Minor with a tempo of 172 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.34829931972789113,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Run_Stop.wav": {
         "sampling_rate": 22050,
@@ -1110,7 +1210,12 @@
         "tonal_stability": 0.04906145665477527,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Run_Stop.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Run_Stop.wav.This is a mysterious effect track in C# Minor with a tempo of 117 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.5108390022675736,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Stomp.wav": {
         "sampling_rate": 22050,
@@ -1163,7 +1268,12 @@
         "tonal_stability": 0.03982875302040642,
         "mood": "mysterious",
         "function": "effect",
-        "description": "This track is named Effect_Stomp.wav.This is a mysterious effect track in F# Minor with a tempo of 258 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n"
+        "description": "This track is named Effect_Stomp.wav.This is a mysterious effect track in F# Minor with a tempo of 258 BPM. It has low energy and simple structure. The track features strong bass and warm treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 0.23219954648526078,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Effect_Theme_Game_Over.wav": {
         "sampling_rate": 22050,
@@ -1216,7 +1326,12 @@
         "tonal_stability": 0.08168396007985902,
         "mood": "triumphant",
         "function": "game_over,background,effect",
-        "description": "This track is named Effect_Theme_Game_Over.wav.This is a triumphant game_over,background,effect track in C# Major with a tempo of 129 BPM. It has high energy and complex structure. The track features strong bass and bright treble characteristics.\n"
+        "description": "This track is named Effect_Theme_Game_Over.wav.This is a triumphant game_over,background,effect track in C# Major with a tempo of 129 BPM. It has high energy and complex structure. The track features strong bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 3.250793650793651,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Castle(Hurry).wav": {
         "sampling_rate": 22050,
@@ -1269,7 +1384,12 @@
         "tonal_stability": 0.02749750207825972,
         "mood": "balanced",
         "function": "background,hurry",
-        "description": "This track is named Theme_Castle(Hurry).wav.This is a balanced background,hurry track in D# Minor with a tempo of 112 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Castle(Hurry).wav.This is a balanced background,hurry track in D# Minor with a tempo of 112 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 304.94766439909296,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Castle.wav": {
         "sampling_rate": 22050,
@@ -1322,7 +1442,12 @@
         "tonal_stability": 0.0415563595219177,
         "mood": "triumphant",
         "function": "background",
-        "description": "This track is named Theme_Castle.wav.This is a triumphant background track in D Minor with a tempo of 89 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Castle.wav.This is a triumphant background track in D Minor with a tempo of 89 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 307.7340589569161,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Ending.wav": {
         "sampling_rate": 22050,
@@ -1375,7 +1500,12 @@
         "tonal_stability": 0.08521561311293019,
         "mood": "triumphant",
         "function": "background",
-        "description": "This track is named Theme_Ending.wav.This is a triumphant background track in C Major with a tempo of 75 BPM. It has high energy and complex structure. The track features strong bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Ending.wav.This is a triumphant background track in C Major with a tempo of 75 BPM. It has high energy and complex structure. The track features strong bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 300.7912925170068,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Ground(Hurry).wav": {
         "sampling_rate": 22050,
@@ -1428,7 +1558,12 @@
         "tonal_stability": 0.034635504800904035,
         "mood": "balanced",
         "function": "background,hurry",
-        "description": "This track is named Theme_Ground(Hurry).wav.This is a balanced background,hurry track in C Major with a tempo of 117 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Ground(Hurry).wav.This is a balanced background,hurry track in C Major with a tempo of 117 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 294.75410430838997,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Ground.wav": {
         "sampling_rate": 22050,
@@ -1481,7 +1616,12 @@
         "tonal_stability": 0.028262425417787028,
         "mood": "balanced",
         "function": "background",
-        "description": "This track is named Theme_Ground.wav.This is a balanced background track in C Major with a tempo of 135 BPM. It has high energy and simple structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Ground.wav.This is a balanced background track in C Major with a tempo of 135 BPM. It has high energy and simple structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 301.7665306122449,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Invincibility.wav": {
         "sampling_rate": 22050,
@@ -1534,7 +1674,12 @@
         "tonal_stability": 0.03857952950968526,
         "mood": "energetic",
         "function": "background",
-        "description": "This track is named Theme_Invincibility.wav.This is a energetic background track in C Major with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Invincibility.wav.This is a energetic background track in C Major with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 300.7912925170068,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Invincible(Hurry).wav": {
         "sampling_rate": 22050,
@@ -1587,7 +1732,12 @@
         "tonal_stability": 0.03311243996637875,
         "mood": "energetic",
         "function": "background,hurry",
-        "description": "This track is named Theme_Invincible(Hurry).wav.This is a energetic background,hurry track in C Major with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Invincible(Hurry).wav.This is a energetic background,hurry track in C Major with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 300.3965532879819,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Underground(Hurry).wav": {
         "sampling_rate": 22050,
@@ -1640,7 +1790,12 @@
         "tonal_stability": 0.016823392927522923,
         "mood": "energetic",
         "function": "background,hurry",
-        "description": "This track is named Theme_Underground(Hurry).wav.This is a energetic background,hurry track in C# Minor with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Underground(Hurry).wav.This is a energetic background,hurry track in C# Minor with a tempo of 151 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 300.7912925170068,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Underground.wav": {
         "sampling_rate": 22050,
@@ -1693,7 +1848,12 @@
         "tonal_stability": 0.020501153236192973,
         "mood": "balanced",
         "function": "background",
-        "description": "This track is named Theme_Underground.wav.This is a balanced background track in C# Minor with a tempo of 99 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Underground.wav.This is a balanced background track in C# Minor with a tempo of 99 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 301.859410430839,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Underwater(Hurry).wav": {
         "sampling_rate": 22050,
@@ -1746,7 +1906,12 @@
         "tonal_stability": 0.03847358086957962,
         "mood": "triumphant",
         "function": "background,hurry",
-        "description": "This track is named Theme_Underwater(Hurry).wav.This is a triumphant background,hurry track in C Major with a tempo of 99 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Underwater(Hurry).wav.This is a triumphant background,hurry track in C Major with a tempo of 99 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 306.6891609977324,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     },
     "Theme_Underwater.wav": {
         "sampling_rate": 22050,
@@ -1799,6 +1964,11 @@
         "tonal_stability": 0.037177767596794455,
         "mood": "triumphant",
         "function": "background",
-        "description": "This track is named Theme_Underwater.wav.This is a triumphant background track in C Major with a tempo of 112 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n"
+        "description": "This track is named Theme_Underwater.wav.This is a triumphant background track in C Major with a tempo of 112 BPM. It has high energy and complex structure. The track features subtle bass and bright treble characteristics.\n",
+        "beat_times": null,
+        "beat_strength": 304.41360544217684,
+        "tempo_scores": null,
+        "tempo_structure": null,
+        "chroma_mean": null
     }
 }

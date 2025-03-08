@@ -1,5 +1,5 @@
 from typing_extensions import Annotated, List, Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, RootModel, Field
 
 
 class AudioMetadata(BaseModel):
@@ -64,7 +64,7 @@ class AudioMetadata(BaseModel):
             le=1.0,
         ),
     ]
-    zero_crossing_rate: Annotated[
+    zero_crossing_rate_mean: Annotated[
         float,
         Field(
             description="Average rate of sign changes in the audio. Higher values indicate more high-frequency content or noise",
@@ -149,45 +149,50 @@ class AudioMetadata(BaseModel):
     # Optional Values (not included in the metadata.json but part of the extraction process)
     beat_times: Annotated[
         Optional[List[float]],
-        Field(description="List of timestamps (in seconds) where beats occur"),
+        Field(None, description="List of timestamps (in seconds) where beats occur"),
     ]
     beat_strength: Annotated[
         Optional[float],
-        Field("Number of beats relative to track tempo, indicating rhythmic density"),
+        Field(
+            None,
+            description="Number of beats relative to track tempo, indicating rhythmic density",
+        ),
     ]
     tempo_scores: Annotated[
         Optional[List[float]],
         Field(
-            description="Scores for different candidate tempos, useful for identifying rhythm patterns"
+            None,
+            description="Scores for different candidate tempos, useful for identifying rhythm patterns",
         ),
     ]
     tempo_structure: Annotated[
         Optional[List[float]],
-        Field(description="Temporal evolution of tempo patterns in the track"),
+        Field(None, description="Temporal evolution of tempo patterns in the track"),
     ]
     chroma_mean: Annotated[
         Optional[List[float]],
         Field(
-            description="Mean chromagram values for each pitch class, useful for key detection"
+            None,
+            description="Mean chromagram values for each pitch class, useful for key detection",
         ),
     ]
 
 
-class AudioMetadataCollection(BaseModel):
-    __root__: Annotated[
+class AudioMetadataCollection(RootModel):
+    root: Annotated[
         dict[str, AudioMetadata],
         Field(description="Dictionary mapping track filenames to their metadata"),
     ]
 
     def __getitem__(self, key: str) -> AudioMetadata:
-        return self.__root__[key]
+        return self.root[key]
 
     def items(self):
-        return self.__root__.items()
+        return self.root.items()
 
     def keys(self):
         """Get all track names"""
-        return self.__root__.keys()
+        return self.root.keys()
 
     def values(self):
         """Get all track metadata"""
