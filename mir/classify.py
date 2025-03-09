@@ -4,6 +4,7 @@ from tqdm import tqdm
 logger = logging.getLogger(__name__)
 
 
+# TODO: Replace with a more robust ML approach
 class AudioClassifier:
     def __init__(self, audio_metadata: dict, metadata_averages: dict):
         logger.info("Classifying audio tracks with mood and function")
