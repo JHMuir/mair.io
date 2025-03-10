@@ -11,6 +11,7 @@ from langgraph.graph import START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from typing_extensions import TypedDict
 import faiss
+from mir.metadata_model import get_schema_descriptions
 
 logger = logging.getLogger(__name__)
 
@@ -42,34 +43,22 @@ class GeminiClient:
             index_to_docstore_id={},
         )
         self.documents = self._store_documents(document_path=audio_metadata_path)
-        self.prompt = PromptTemplate.from_template(
-            """
-            You are an AI assistant built to answer questions about video game soundtracks.
-            You will both intelligently answer questions about the soundtrack, and retrieve the file is the user asks.
-            You are currently loaded with the original Super Mario Bros (1985) soundtrack.
-            Use the following pieces of context to answer the question at the end.
-            The context is audio metadata derived and extracted from each audio file in the Super Mario Bros Soundtrack.
-            Always start the conversation with "It's-a-me, Mairio!"
-
-            {context}
-
-            Question: {query}
-
-            Answer:
-        """
-        )
-        self.graph = self._compile()
+        if self.documents:
+            self.prompt = self._create_prompt()
+            self.graph = self._compile()
+        else:
+            logger.error("Documents not stored correctly")
 
     def invoke(self, query) -> dict:
         result = self.graph.invoke({"query": query})
         return result
 
-    def retrieve(self, state: ClientState) -> dict:
+    def _retrieve(self, state: ClientState) -> dict:
         # Here if you want to change the number of retrieved docs
         retrieved_docs = self.vector_store.similarity_search(state["query"])
         return {"context": retrieved_docs}
 
-    def generate(self, state: ClientState) -> dict:
+    def _generate(self, state: ClientState) -> dict:
         docs_content = "\n\n".join(doc.page_content for doc in state["context"])
         messages = self.prompt.invoke(
             {"query": state["query"], "context": docs_content}
@@ -80,9 +69,9 @@ class GeminiClient:
     def _compile(self) -> CompiledStateGraph:
         logger.info("Building GeminiClient graph")
         graph_builder = StateGraph(ClientState).add_sequence(
-            [self.retrieve, self.generate]
+            [self._retrieve, self._generate]
         )
-        graph_builder.add_edge(START, "retrieve")
+        graph_builder.add_edge(START, "_retrieve")
         graph = graph_builder.compile()
         return graph
 
@@ -106,6 +95,37 @@ class GeminiClient:
                 docs_list.append(loader.load(doc_path))
             self.vector_store.add_documents(documents=docs_list)
             return docs_list
+
+    def _create_prompt(self) -> PromptTemplate:
+        schema_descriptions = get_schema_descriptions()
+
+        text_descriptions = "\n".join(
+            [
+                f"- {field}: {schema_descriptions.get(field, ' ')}"
+                for field in schema_descriptions
+            ]
+        )
+        prompt = f"""
+            You are Mairio, an AI assistant built to answer questions about video game soundtracks.
+            You will both intelligently answer questions about the soundtrack, or retrieve the soundtrack file if the user asks.
+            You are currently loaded with the original Super Mario Bros (1985) soundtrack.
+            Always answer in human-readable text and language. Never return in another format.
+            Use the following pieces of context to answer the question at the end.
+            The context is audio metadata derived and extracted from each audio file in the Super Mario Bros Soundtrack.
+            The audio metadata you are loaded with have descriptions that correspond to what each value represents.
+            Those descriptions are as follows:
+            {text_descriptions}
+            Always start the conversation with "It's-a-me, Mairio!"
+            If the user asks a question about a song you are not loaded with, or asks a question you cannot reasonably answer, say that you do not know the answer.
+
+            The context for the question is as follows:
+            {{context}}
+
+            Question: {{query}}
+
+            Answer:
+        """
+        return PromptTemplate.from_template(prompt)
 
     # def parse_music_data(self) -> list:
     #     if not self.client.files.list():

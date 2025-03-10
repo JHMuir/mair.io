@@ -2,6 +2,15 @@ from typing_extensions import Annotated, List, Optional
 from pydantic import BaseModel, RootModel, Field
 
 
+def get_schema_descriptions() -> dict:
+    schema = AudioMetadata.model_json_schema()
+    descriptions = {}
+    for name, field in schema.get("properties", {}).items():
+        if "description" in field:
+            descriptions[name] = field["description"]
+    return descriptions
+
+
 class AudioMetadata(BaseModel):
     """Pydantic model for audio metadata with field descriptors"""
 
