@@ -1,5 +1,6 @@
 import logging
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 
@@ -24,10 +25,20 @@ class GeminiApp:
         self.app = FastAPI(
             title="MAIR.IO API", summary="Endpoint for MAIR.IO's backend"
         )
-        self.setup_routes()
+        self._add_middleware()
+        self._setup_routes()
 
-    def setup_routes(self) -> None:
-        self.app.get("/")(self.hello)
+    def _add_middleware(self):
+        self.app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],  # Allows all origins
+            allow_credentials=True,
+            allow_methods=["*"],  # Allows all methods
+            allow_headers=["*"],  # Allows all headers
+        )
+
+    def _setup_routes(self) -> None:
+        # self.app.get("/")(self.hello)
         self.app.post("/chat")(self.chat_query)
 
     async def chat_query(self, request: QueryRequest) -> dict:
