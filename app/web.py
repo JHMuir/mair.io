@@ -25,10 +25,10 @@ class GeminiApp:
         self.app = FastAPI(
             title="MAIR.IO API", summary="Endpoint for MAIR.IO's backend"
         )
-        self._add_middleware()
+        self._configure_cors()
         self._setup_routes()
 
-    def _add_middleware(self):
+    def _configure_cors(self):
         self.app.add_middleware(
             CORSMiddleware,
             allow_origins=["*"],  # Allows all origins
@@ -42,7 +42,7 @@ class GeminiApp:
         self.app.post("/chat")(self.chat_query)
 
     async def chat_query(self, request: QueryRequest) -> dict:
-        result = self.client.invoke(request.query)
+        result = await self.client.invoke(request.query)
         return {"response": result["response"], "context": result["context"]}
 
     async def hello(self) -> dict:

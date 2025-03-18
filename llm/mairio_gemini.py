@@ -49,8 +49,8 @@ class GeminiClient:
         else:
             logger.error("Documents not stored correctly")
 
-    def invoke(self, query) -> dict:
-        result = self.graph.invoke({"query": query})
+    async def invoke(self, query) -> dict:
+        result = await self.graph.ainvoke({"query": query})
         return result
 
     def _retrieve(self, state: ClientState) -> dict:
