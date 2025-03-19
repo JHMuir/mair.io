@@ -53,6 +53,7 @@ class GeminiClient:
         result = await self.graph.ainvoke({"query": query})
         return result
 
+    # @tool(response_format="content_and_artifact")
     def _retrieve(self, state: ClientState) -> dict:
         # Here if you want to change the number of retrieved docs
         retrieved_docs = self.vector_store.similarity_search(state["query"])
