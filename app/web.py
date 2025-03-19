@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
 
-from llm.mairio_gemini import GeminiClient
+from llm.gemini import GeminiClient
 
 logger = logging.getLogger(__name__)
 
